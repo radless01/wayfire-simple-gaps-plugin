@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<wayfire>
+    <plugin name="simple-gaps">
+        <_short>Simple Gaps</_short>
+        <_long>Apply an outer gap to maximized windows without providing tiling.</_long>
+        <category>Window Management</category>
+
+        <option name="gap" type="int">
+            <_short>Outer gap</_short>
+            <_long>Outer gap in logical pixels around maximized windows.</_long>
+            <default>10</default>
+        </option>
+    </plugin>
+</wayfire>
