@@ -1,21 +1,32 @@
-project(
-	'wf-simple-gaps-plugin',
-        'c',
-	'cpp',
-	version: '0.0',
-	license: 'MIT',
-	meson_version: '>=0.51.0',
-	default_options: [
-		'cpp_std=c++17',
-                'c_std=c99',
-		'werror=false',
-	],
+project('wf-simple-gaps-plugin', 'cpp', version: '1.0.0')
+args = [
+    '-DWLR_USE_UNSTABLE',
+    '-DWAYFIRE_PLUGIN',
+    '-D_FILE_OFFSET_BITS=64'
+]
+
+add_project_arguments(args, language: 'cpp')
+add_project_link_arguments(['-rdynamic'], language: 'cpp')
+
+wayfire = dependency('wayfire')
+deps = [
+    wayfire
+]
+
+sources = files(
+    'src/main.cpp'
 )
 
-wayfire = dependency('wayfire', version: '>=0.11.0')
+shared_module(
+    'simple-gaps',
+    sources: sources,
+    dependencies: deps,
 
-project_args = ['-DWLR_USE_UNSTABLE']
-add_project_arguments(project_args, language: ['cpp', 'c'])
+    install: true,
+    install_dir: wayfire.get_variable(pkgconfig: 'plugindir')
+)
 
-subdir('src')
-subdir('metadata')
+install_data(
+    'metadata/simple-gaps.xml',
+    install_dir: wayfire.get_variable(pkgconfig: 'metadatadir'),
+)
